@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress XmlHighlighting -->
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+         name="IntraEhCache">
+
+    <diskStore path="/tmp/IntraApp/cacheData"/>
+
+    <defaultCache maxElementsInMemory="25000" statistics="true"
+                  timeToIdleSeconds="1200" timeToLiveSeconds="3600" overflowToDisk="true"
+                  diskPersistent="false" memoryStoreEvictionPolicy="LFU" />
+
+</ehcache>
