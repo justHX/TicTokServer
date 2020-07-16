@@ -20,16 +20,21 @@ services:
       - POSTGRES_DB=maze
     restart: unless-stopped
   # APP*****************************************
-  springbootapp:
-    image: springbootapp:latest
-    network_mode: bridge
-    container_name: springbootapp
-    expose:
-      - 8888
+  # App backend service
+  app-server:
+    # Configuration for building the docker image for the backend service
+    build: TicTacToe/
+
+      dockerfile: Dockerfile
     ports:
       - 8888:8888
-    restart: unless-stopped
+    restart: always
     depends_on:
-      - postgres
-    links:
-      - postgres
+      - postgres # This service depends on mysql. Start that first.
+    environment: # Pass environment variables to the service
+      SPRING_DATASOURCE_URL: jdbc:postgresql://80.209.238.173:5432/maze
+      SPRING_DATASOURCE_USERNAME: kharin
+      SPRING_DATASOURCE_PASSWORD: 123
+    networks: # Networks to join (Services on the same network can communicate with each other using their name)
+      - backend
+      - frontend
