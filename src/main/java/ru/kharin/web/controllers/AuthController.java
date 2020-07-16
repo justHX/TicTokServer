@@ -15,6 +15,7 @@ import ru.kharin.web.data.LoginCredentials;
 import ru.kharin.web.data.UserDTO;
 import ru.kharin.web.helpers.UserHelper;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -42,6 +43,7 @@ public class AuthController {
     @SuppressWarnings("ConstantConditions")
     @PostMapping(value = "/api/login")
     public ResponseEntity<Object> login(@RequestBody LoginCredentials credentials) {
+        logout();
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         try {
             String sessionId;
@@ -58,8 +60,7 @@ public class AuthController {
                 }
             }
             UserDTO userDTO = new UserDTO();
-//          userDTO.setEmployee(new EmployeeDTO(userDetails.getUser().getEmployee()));
-//          userDTO.setPermissions(UserHelper.getUserPermissions());
+            userDTO.setNickname(userDetails.getUser().getNickname());
             return new ResponseEntity<>(userDTO, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.UNAUTHORIZED);
@@ -69,13 +70,10 @@ public class AuthController {
     @SuppressWarnings("ConstantConditions")
     @PostMapping("/api/logout")
     public ResponseEntity<String> logout() {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            SessionInformation sessionInformation = sessionRegistry.getSessionInformation(session.getId());
-            if (sessionInformation != null) {
-                sessionInformation.expireNow();
-            }
+        try {
+            ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().logout();
+        } catch (ServletException e) {
+            e.printStackTrace();
         }
         return new ResponseEntity<>("{\"message\":\"Successful logout\"}", HttpStatus.OK);
     }
@@ -83,8 +81,7 @@ public class AuthController {
     @GetMapping("/api/currentUser")
     public ResponseEntity<UserDTO> getCurrentUser() {
         UserDTO userDTO = new UserDTO();
-//        userDTO.setEmployee(new EmployeeDTO(UserHelper.getUser().getEmployee()));
-//        userDTO.setPermissions(UserHelper.getUserPermissions());
+        userDTO.setUser(UserHelper.getUser());
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 }

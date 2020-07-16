@@ -1,0 +1,35 @@
+version: "3"
+
+volumes:
+  postgres-data:
+
+services:
+  postgres:
+    image: postgres:latest
+    network_mode: bridge
+    container_name: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    ports:
+      - 80.209.238.173:5432:5432
+    environment:
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_USER=kharin
+      - POSTGRES_DB=maze
+    restart: unless-stopped
+  # APP*****************************************
+  springbootapp:
+    image: springbootapp:latest
+    network_mode: bridge
+    container_name: springbootapp
+    expose:
+      - 8888
+    ports:
+      - 8888:8888
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    links:
+      - postgres

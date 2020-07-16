@@ -1,24 +1,26 @@
 package ru.kharin.web.data;
 
+import ru.kharin.db.entity.Users;
+
 import javax.validation.constraints.NotNull;
 
 public class UserDTO {
-   private String login;
-   private String password;
+    private String nickname;
+    private Users user;
 
-    public String getLogin() {
-        return login;
+    public Users getUser() {
+        return user;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUser(Users user) {
+        this.user = user;
     }
 
-    public String getPassword() {
-        return password;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

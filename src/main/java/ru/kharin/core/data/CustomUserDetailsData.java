@@ -5,7 +5,6 @@ import org.springframework.security.core.userdetails.User;
 import ru.kharin.db.entity.Users;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 public class CustomUserDetailsData extends User {
 

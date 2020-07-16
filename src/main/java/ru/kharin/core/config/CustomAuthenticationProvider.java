@@ -17,14 +17,11 @@ import ru.kharin.db.entity.Users;
 import ru.kharin.db.repository.UserRepository;
 
 @Service("authenticationProvider")
-//@PropertySource("classpath:ldap.authentication.properties")
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     private final SessionRegistry sessionRegistry;
     private final UserRepository userRepository;
-    //private final MSEmployeeRepository employeeRepository;
     private final UserDetailsService userDetailsService;
-    //private final EmployeeDAO employeeDAO;
 
 
     @Autowired
@@ -54,9 +51,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                     userRepository.save(newUser);
                 }
                 ud = userDetailsService.loadUserByUsername(login);
-                CustomUserDetailsData cud = (CustomUserDetailsData) ud;
-//                cud.setUsername(login);
-//                cud.setPassword("" + authentication.getCredentials());
             } catch (Exception e) {
                 return null;
             }
