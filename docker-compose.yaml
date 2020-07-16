@@ -24,8 +24,6 @@ services:
   app-server:
     # Configuration for building the docker image for the backend service
     build: TicTacToe/
-
-      dockerfile: Dockerfile
     ports:
       - 8888:8888
     restart: always
