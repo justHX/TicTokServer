@@ -33,6 +33,4 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://80.209.238.173:5432/maze
       SPRING_DATASOURCE_USERNAME: kharin
       SPRING_DATASOURCE_PASSWORD: 123
-    networks: # Networks to join (Services on the same network can communicate with each other using their name)
-      - backend
-      - frontend
+
